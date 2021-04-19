@@ -1,0 +1,619 @@
+{
+	"info": {
+		"_postman_id": "14b02848-9627-488a-9078-1d165e024c0a",
+		"name": "Django-REST-Backend-Testing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"item": [
+				{
+					"name": "Register a customer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request for registration of a Customer\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var randomNumber = Math.floor(Math.random() * 50);",
+									"var mod_username = pm.variables.get(\"username\")+\"_\"+randomNumber",
+									"pm.collectionVariables.set(\"mod_username\", mod_username);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "{{mod_username}}",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "text"
+								},
+								{
+									"key": "confirm_password",
+									"value": "{{confirm_password}}",
+									"type": "text"
+								},
+								{
+									"key": "first_name",
+									"value": "{{firstname}}",
+									"type": "text"
+								},
+								{
+									"key": "last_name",
+									"value": "{{lastname}}",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "{{email}}",
+									"type": "text"
+								},
+								{
+									"key": "phone_number",
+									"value": "{{phonenumber}}",
+									"type": "text"
+								},
+								{
+									"key": "gender",
+									"value": "{{gender}}",
+									"type": "text"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{app_host}}:{{app_port}}/api/v1/udaystj/customers/",
+							"protocol": "http",
+							"host": [
+								"{{app_host}}"
+							],
+							"port": "{{app_port}}",
+							"path": [
+								"api",
+								"v1",
+								"udaystj",
+								"customers",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register a customer with no username",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([400]);",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"pm.test(\"Verify the error message in the response\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.username[0]).to.eql(\"This field is required.\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "text"
+								},
+								{
+									"key": "confirm_password",
+									"value": "{{confirm_password}}",
+									"type": "text"
+								},
+								{
+									"key": "first_name",
+									"value": "{{first_name}}",
+									"type": "text"
+								},
+								{
+									"key": "last_name",
+									"value": "{{last_name}}",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "{{email}}",
+									"type": "text"
+								},
+								{
+									"key": "phone_number",
+									"value": "{{phone_number}}",
+									"type": "text"
+								},
+								{
+									"key": "gender",
+									"value": "{{gender}}",
+									"type": "text"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{app_host}}:{{app_port}}/api/v1/udaystj/customers/",
+							"protocol": "http",
+							"host": [
+								"{{app_host}}"
+							],
+							"port": "{{app_port}}",
+							"path": [
+								"api",
+								"v1",
+								"udaystj",
+								"customers",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Auth_with_Login with Valid credentials",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();  ",
+									"pm.variables.set(\"token_from_req\", \"Token \"+jsonData.token);",
+									"console.log(pm.variables.get(\"token_from_req\"));",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "venmaum29",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "sun123456",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://{{app_host}}:{{app_port}}/api/v1/udaystj/auth/",
+							"protocol": "http",
+							"host": [
+								"{{app_host}}"
+							],
+							"port": "{{app_port}}",
+							"path": [
+								"api",
+								"v1",
+								"udaystj",
+								"auth",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Coins",
+			"item": [
+				{
+					"name": "GetCoinsWithoutAuth",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});",
+									"pm.test(\"Verify the error message in the response\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.detail).to.eql(\"Authentication credentials were not provided.\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token b8b3ba67d575e3b3035ecbcdcced54993c60fb57",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://{{app_host}}:{{app_port}}/api/v1/udaystj/coins/",
+							"protocol": "http",
+							"host": [
+								"{{app_host}}"
+							],
+							"port": "{{app_port}}",
+							"path": [
+								"api",
+								"v1",
+								"udaystj",
+								"coins",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreatingCoins",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"pm.test(\"Checking the response for attribute value symbol\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    ",
+									"    pm.expect(jsonData.symbol).to.eql(pm.variables.get(\"symbol\"));",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token b8b3ba67d575e3b3035ecbcdcced54993c60fb57",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "symbol",
+									"value": "{{symbol}}",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "{{name}}",
+									"type": "text"
+								},
+								{
+									"key": "nameid",
+									"value": "{{nameid}}",
+									"type": "text"
+								},
+								{
+									"key": "rank",
+									"value": "{{rank}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://{{app_host}}:{{app_port}}/api/v1/udaystj/coins/",
+							"protocol": "http",
+							"host": [
+								"{{app_host}}"
+							],
+							"port": "{{app_port}}",
+							"path": [
+								"api",
+								"v1",
+								"udaystj",
+								"coins",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCoinsWithAuth",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response should contain symbol as attribute\", function () {",
+									"    var jsonData = pm.response.json();",
+									"     pm.expect(jsonData[0].symbol).to.eql(\"BTC\");",
+									"});",
+									"pm.test(\"Response should contain nameid as attribute\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData[0].nameid).to.eql(\"Bitcoin\");",
+									"});",
+									"pm.test(\"Response should contain name as attribute\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData[0].name).to.eql(\"Bitcoin\");",
+									"});",
+									"pm.test(\"Response should contain name as attribute\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData[0].rank).to.eql(\"1\");",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_from_req}}",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Token b8b3ba67d575e3b3035ecbcdcced54993c60fb57",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://{{app_host}}:{{app_port}}/api/v1/udaystj/coins/",
+							"protocol": "http",
+							"host": [
+								"{{app_host}}"
+							],
+							"port": "{{app_port}}",
+							"path": [
+								"api",
+								"v1",
+								"udaystj",
+								"coins",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "coinswithsorting",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Check the value of coins_num\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.info.coins_num).to.eql(5890);",
+									"});",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.coinlore.net/api/tickers/?start=200&limit=100",
+							"protocol": "https",
+							"host": [
+								"api",
+								"coinlore",
+								"net"
+							],
+							"path": [
+								"api",
+								"tickers",
+								""
+							],
+							"query": [
+								{
+									"key": "start",
+									"value": "200"
+								},
+								{
+									"key": "limit",
+									"value": "100"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Exchanges",
+			"item": [
+				{
+					"name": "GetExchanges",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"strictSSL": true,
+						"followRedirects": true,
+						"followOriginalHttpMethod": false,
+						"followAuthorizationHeader": false,
+						"removeRefererHeaderOnRedirect": false
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token b8b3ba67d575e3b3035ecbcdcced54993c60fb57",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://{{app_host}}:{{app_port}}/api/v1/udaystj/exchanges/",
+							"protocol": "http",
+							"host": [
+								"{{app_host}}"
+							],
+							"port": "{{app_port}}",
+							"path": [
+								"api",
+								"v1",
+								"udaystj",
+								"exchanges",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"id": "91b7d4c3-a277-4c28-b8dd-c35015526442",
+			"key": "username",
+			"value": ""
+		},
+		{
+			"id": "170e1308-b81b-411b-ad1e-3cd865653fb2",
+			"key": "username_mod",
+			"value": ""
+		},
+		{
+			"id": "29171775-d1c0-4cd8-bcdb-dd6169da0c46",
+			"key": "mod_username",
+			"value": ""
+		},
+		{
+			"id": "45fbb82e-2cf6-48d3-a5ea-d370026500d5",
+			"key": "token_from_req",
+			"value": ""
+		}
+	]
+}

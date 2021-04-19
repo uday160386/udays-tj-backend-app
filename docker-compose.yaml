@@ -1,0 +1,9 @@
+version: '3'
+services:
+  web:
+    image: venmaum/udays-tj-backend-app:v1.0
+    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py createsuperuser && python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/utj-be
+    ports:
+      - "8000:8000"
