@@ -15,11 +15,14 @@ pipeline{
     stage('Build-and-Tag') {
         steps {
           echo 'Starting to build docker image'
-
+          withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']){
           sh '''
                    #!/bin/bash
                    app = docker.build("venmaum/udaystj-be-services:{env.BUILD_ID}")
                                  '''
+          }
+
+
 
 
 //             script {
@@ -29,12 +32,13 @@ pipeline{
     }
     stage('Post-to-dockerhub') {
     steps {
+    withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']){
     sh '''
                    #!/bin/bash
                    docker.withRegistry('https://registry.hub.docker.com', 'Docker_credentials') {
                 app.push("latest")
                         }
-                                 '''
+                                 '''}
 //         script {
 //         docker.withRegistry('https://registry.hub.docker.com', 'Docker_credentials') {
 //                 app.push("latest")
