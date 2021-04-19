@@ -14,7 +14,11 @@ pipeline{
 
     stage('Build-and-Tag') {
         steps {
-        echo 'Starting to build docker image'
+
+         sh '''#!/bin/bash
+                 echo "hello world"
+         '''
+          echo 'Starting to build docker image'
             script {
         def app = docker.build("venmaum/udaystj-be-services:{env.BUILD_ID}")
         }
