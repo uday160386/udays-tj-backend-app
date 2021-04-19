@@ -14,23 +14,32 @@ pipeline{
 
     stage('Build-and-Tag') {
         steps {
-
-         sh '''#!/bin/bash
-                 echo "hello world"
-         '''
           echo 'Starting to build docker image'
-            script {
-        def app = docker.build("venmaum/udaystj-be-services:{env.BUILD_ID}")
-        }
+
+          sh '''
+                   #!/bin/bash
+                   app = docker.build("venmaum/udaystj-be-services:{env.BUILD_ID}")
+                                 '''
+
+
+//             script {
+//         app = docker.build("venmaum/udaystj-be-services:{env.BUILD_ID}")
+//         }
     }
     }
     stage('Post-to-dockerhub') {
     steps {
-        script {
-        docker.withRegistry('https://registry.hub.docker.com', 'Docker_credentials') {
+    sh '''
+                   #!/bin/bash
+                   docker.withRegistry('https://registry.hub.docker.com', 'Docker_credentials') {
                 app.push("latest")
                         }
-            }
+                                 '''
+//         script {
+//         docker.withRegistry('https://registry.hub.docker.com', 'Docker_credentials') {
+//                 app.push("latest")
+//                         }
+//             }
     }
     }
 //     stage('tests') {
