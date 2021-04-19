@@ -10,8 +10,11 @@ node {
     stage('Build image') {
         /* This builds the actual image; synonymous to
          * docker build on the command line */
-
+         steps{
+          #!/bin/bash -il
         app = docker.build("venmaum/udaystj-be-services")
+         }
+
     }
 
     stage('Test image') {
@@ -28,9 +31,13 @@ node {
          * First, the incremental build number from Jenkins
          * Second, the 'latest' tag.
          * Pushing multiple tags is cheap, as all the layers are reused. */
+         steps{
+         #!/bin/bash -il
         docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-Docker_credentials') {
             app.push("${env.BUILD_NUMBER}")
             app.push("latest")
+         }
+
         }
     }
 }
