@@ -13,13 +13,16 @@ pipeline{
              }
     stage('Build-and-push') {
         steps {
-            docker.withRegistry('https://registry.hub.docker.com', 'Docker_credentials') {
+        script{
+        docker.withRegistry('https://registry.hub.docker.com', 'Docker_credentials') {
 
                 def customImage = docker.build("udays-tj-backend-app:${env.BUILD_ID}")
 
                 /* Push the container to the custom Registry */
                      customImage.push("latest")
                     }
+        }
+
              }
         }
     }
