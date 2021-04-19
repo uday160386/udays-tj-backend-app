@@ -1,9 +1,10 @@
-FROM python:3.6
-
-RUN mkdir /code
-WORKDIR /code
-ADD . /code/
+FROM python:3
+ENV PYTHONUNBUFFERED 1
+RUN mkdir /utj-be
+WORKDIR /utj-be
+RUN python -m venv env
+RUN /bin/bash -c "source env/bin/activate"
+ADD requirements.txt /utj-be/
 RUN pip install -r requirements.txt
+ADD . /utj-be/
 EXPOSE 8000
-EXPOSE 8000
-CMD ["sh", "-c", "python manage.py migrate; python manage.py runserver 0.0.0.0:8000"]
