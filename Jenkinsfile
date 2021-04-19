@@ -15,18 +15,17 @@ pipeline{
     stage('Build-and-Tag') {
         steps {
         echo 'Starting to build docker image'
-            script {
+
         def app = docker.build("venmaum/udaystj-be-services:{env.BUILD_ID}")
-        }
+
     }
     }
     stage('Post-to-dockerhub') {
     steps {
-        script {
+
         docker.withRegistry('https://registry.hub.docker.com', 'Docker_credentials') {
                 app.push("latest")
                         }
-            }
     }
     }
 }
