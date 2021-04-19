@@ -15,7 +15,6 @@ pipeline{
     stage('Build-and-Tag') {
          app = docker.build("venmaum/udaystj-be-services:{env.BUILD_ID}")
     }
-    }
     stage('Post-to-dockerhub') {
         docker.withRegistry('https://registry.hub.docker.com', 'Docker_credentials') {
                 app.push("latest")
