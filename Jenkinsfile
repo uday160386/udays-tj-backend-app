@@ -3,13 +3,24 @@ pipeline{
     app =''
     }
     agent any
+
     stages{
+    stage('Initialize'){
+        def dockerHome = tool 'myDocker'
+        env.PATH = "${dockerHome}/bin:${env.PATH}"
+    }
          stage('Cloning Git') {
                 /* Let's make sure we have the repository cloned to our workspace */
             steps {
                 checkout scm
             }
             }
+    stage('tests') {
+        steps {
+                npm install -g newman
+                newman run /tests/Django-REST-Backend-Testing.postman_collection.json -e /tests/env/Django-REST-Backend-Dev_env.postman_environment.json -d /tests/data/data.csv
+            }
+    }
     stage('Build-and-Tag') {
         steps {
             script {
