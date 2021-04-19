@@ -1,0 +1,22 @@
+[
+  {
+    "username":"udaykumar",
+    "password": "sun12345",
+    "confirm_password": "sun12345",
+    "email": "venkata.udaykumar@outlook.com",
+    "firstname": "uday",
+    "lastname": "kumar",
+    "phonenumber": "+6592721549",
+    "gender": "M"
+  },
+  {
+    "username":"Suresh",
+    "password": "sun3456",
+    "confirm_password": "sun3456",
+    "email": "Suresh.1@outlook.com",
+    "firstname": "Suresh",
+    "lastname": "kumar",
+    "phonenumber": "+6592721549",
+    "gender": "M"
+  }
+]
