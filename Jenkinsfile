@@ -1,36 +1,30 @@
-node {
-    def app
-
-    stage('Clone repository') {
-        /* Let's make sure we have the repository cloned to our workspace */
-
-        checkout scm
+pipeline{
+    environment {
+    app =''
     }
+    agent any
 
-    stage('Build image') {
-        /* This builds the actual image; synonymous to
-         * docker build on the command line */
+    stages{
+    stage('Initialize'){
+    steps {
 
-         bash '''
-             #!/bin/bash
-             app = docker.build("venmaum/udaystj-be-services")
-             '''
-        }
-
-    stage('Push image') {
-        /* Finally, we'll push the image with two tags:
-         * First, the incremental build number from Jenkins
-         * Second, the 'latest' tag.
-         * Pushing multiple tags is cheap, as all the layers are reused. */
-
-          bash '''
-             #!/bin/bash
-            docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-Docker_credentials') {
-            app.push("${env.BUILD_NUMBER}")
-            app.push("latest")
+         stage('Cloning Git') {
+                /* Let's make sure we have the repository cloned to our workspace */
+            steps {
+                checkout scm
             }
-             '''
+            }
+    stage('Build-and-push') {
+        steps {
+            docker.withRegistry('https://registry.hub.docker.com', 'Docker_credentials') {
 
+        def customImage = docker.build("udays-tj-backend-app:${env.BUILD_ID}")
+
+        /* Push the container to the custom Registry */
+        customImage.push("latest")
+    }
+          }
+    }
 
     }
 }
