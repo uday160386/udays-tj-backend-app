@@ -11,11 +11,7 @@ pipeline{
                 checkout scm
             }
             }
-    stage('tests') {
-        steps {
-                sh "newman run /tests/Django-REST-Backend-Testing.postman_collection.json -e /tests/env/Django-REST-Backend-Dev_env.postman_environment.json -d /tests/data/data.csv"
-            }
-    }
+
     stage('Build-and-Tag') {
         steps {
             script {
@@ -32,11 +28,17 @@ pipeline{
             }
     }
     }
-     stage('SECURITY-IMAGE-SCANNER') {
-            steps {
-                sh 'echo "docker.io/venmaum/udaystj-be-services `pwd`/Dockerfile" > anchore_images'
-                anchore name: 'anchore_images'
-            }
-        }
+//     stage('tests') {
+//         steps {
+//
+//                 sh "newman run /tests/Django-REST-Backend-Testing.postman_collection.json -e /tests/env/Django-REST-Backend-Dev_env.postman_environment.json -d /tests/data/data.csv"
+//             }
+//     }
+//      stage('SECURITY-IMAGE-SCANNER') {
+//             steps {
+//                 sh 'echo "docker.io/venmaum/udaystj-be-services `pwd`/Dockerfile" > anchore_images'
+//                 anchore name: 'anchore_images'
+//             }
+//         }
 }
 }
