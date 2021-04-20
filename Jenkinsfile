@@ -12,9 +12,15 @@ pipeline{
             }
     stage('Unit-Tests') {
             /* Stage where Unit test scripts will be executed */
+            steps {
+                sh 'echo "Unit Tests"'
+            }
     }
-    stage('Unit-Tests') {
+    stage('contract-Tests') {
             /* Stage where contract test scripts will be executed. Tools can be pact.io */
+            steps {
+                sh 'echo "contract Tests"'
+            }
     }
     stage('Build-and-Tag') {
         steps {
@@ -55,10 +61,16 @@ pipeline{
             }
      stage('performance-Tests') {
             /* Stage where automated performance tests will be executed.Tools will be locust or jmeter */
+            steps {
+                sh 'echo "performance Tests"'
+            }
         }
         stage('security-Tests') {
 
         /* Stage where security tests will be running */
+        steps {
+                sh 'echo "security Tests"'
+            }
         }
 }
 }
