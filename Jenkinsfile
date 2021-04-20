@@ -47,8 +47,8 @@ pipeline{
     }
      stage('tests-report') {
             steps {
-                    try {
-                       sh '''#!/bin/bash
+
+                sh '''#!/bin/bash
                 export PATH=/even/more/path:$PATH
                 newman run tests/Django-REST-Backend-Testing.postman_collection.json -e tests/env/Django-REST-Backend-Dev_env.postman_environment.json -d tests/data/data.csv -r htmlextra --reporter-htmlextra-export ./results/report.html
                 '''
@@ -60,10 +60,9 @@ pipeline{
                         reportFiles: 'report.html',
                         reportName: 'HTML Report'
                          ]
-                    } catch (err) {
-                      echo "something failed"
-                    }
-
+                }
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh "exit 1"
                 }
             }
      stage('performance-Tests') {
