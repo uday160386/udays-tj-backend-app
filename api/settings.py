@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'exchanges',
     'rest_framework_swagger',
     'django.contrib.sites',
-    'corsheaders',
 
 ]
 CORS_ORIGIN_ALLOW_ALL = True
@@ -75,14 +74,9 @@ CORS_ALLOW_HEADERS = [
     'x-csrftoken',
     'x-requested-with',
 ]
-CORS_ALLOW_CREDENTIALS= False
-
-
-
-
+CORS_ALLOW_CREDENTIALS = False
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -165,7 +159,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
-    'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated'
