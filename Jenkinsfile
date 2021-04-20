@@ -26,28 +26,23 @@ pipeline{
             }
     }
     }
-     stage('tests') {
+     stage('tests-report') {
             steps {
 
                 sh '''#!/bin/bash
                 export PATH=/even/more/path:$PATH
                 newman run tests/Django-REST-Backend-Testing.postman_collection.json -e tests/env/Django-REST-Backend-Dev_env.postman_environment.json -d tests/data/data.csv -r htmlextra --reporter-htmlextra-export ./results/report.html
                 '''
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh "exit 1"
+                publishHTML target: [
+                        allowMissing: false,
+                        alwaysLinkToLastBuild: false,
+                        keepAll: true,
+                        reportDir: 'results',
+                        reportFiles: 'report.html',
+                        reportName: 'HTML Report'
+                         ]
                 }
             }
         }
-     stage('publish-html-report'){
-     steps{
-     publishHTML target: [
-            allowMissing: false,
-            alwaysLinkToLastBuild: false,
-            keepAll: true,
-            reportDir: 'results',
-            reportFiles: 'report.html',
-            reportName: 'HTML Report'
-          ]}
-     }
     }
 }
