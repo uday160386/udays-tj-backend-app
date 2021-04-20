@@ -10,6 +10,12 @@ pipeline{
                 checkout scm
             }
             }
+    stage('Unit-Tests') {
+            /* Stage where Unit test scripts will be executed */
+    }
+    stage('Unit-Tests') {
+            /* Stage where contract test scripts will be executed. Tools can be pact.io */
+    }
     stage('Build-and-Tag') {
         steps {
             script {
@@ -18,6 +24,7 @@ pipeline{
     }
     }
     stage('Post-to-dockerhub') {
+        /* Stage where Docker image will be pushed to AWS ECR*/
     steps {
         script {
         docker.withRegistry('https://registry.hub.docker.com', 'Docker_credentials') {
@@ -25,6 +32,9 @@ pipeline{
                         }
             }
     }
+    }
+    stage('Running Image in Kubernetes') {
+    /* Stage where Docker image will be running with AWS EKS */
     }
      stage('tests-report') {
             steps {
@@ -37,11 +47,17 @@ pipeline{
                         allowMissing: false,
                         alwaysLinkToLastBuild: false,
                         keepAll: true,
-                        reportDir: 'results',
+                        reportDir: './results',
                         reportFiles: 'report.html',
                         reportName: 'HTML Report'
                          ]
                 }
             }
+     stage('performance-Tests') {
+            /* Stage where automated performance tests will be executed.Tools will be locust or jmeter */
+        }
+        stage('security-Tests') {
+
+        /* Stage where security tests will be running */
         }
 }
