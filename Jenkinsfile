@@ -81,7 +81,7 @@ pipeline{
              }
         }
         }
-
+}
      stage('performance-Tests') {
             /* Stage where automated performance tests will be executed.Tools will be locust or jmeter */
             steps {
