@@ -46,7 +46,7 @@ pipeline{
             }
     }
 
-    try {
+
    stage('tests-report') {
    steps {
 
@@ -54,9 +54,7 @@ pipeline{
                 export PATH=/even/more/path:$PATH
                 newman run tests/Django-REST-Backend-Testing.postman_collection.json -e tests/env/Django-REST-Backend-Dev_env.postman_environment.json -d tests/data/data.csv -r htmlextra --reporter-htmlextra-export ./results/report.html
                 '''
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh "exit 1"
-                }
+
                 publishHTML target: [
                         allowMissing: false,
                         alwaysLinkToLastBuild: false,
@@ -66,17 +64,23 @@ pipeline{
                         reportName: 'HTML Report'
                          ]
                 }
-             node {
-               def e2e = build job:'tests-report', propagate: false
+
+             script{
+             try {
+
+             def e2e = build job:'tests-report', propagate: false
                result = e2e.result
                if (result.equals("SUCCESS")) {
                } else {
                   sh "exit 1" // this fails the stage
                }
              }
-           }
+
         } catch (e) {
            result = "FAIL" // make sure other exceptions are recorded as failure too
+
+             }
+}
         }
 
      stage('performance-Tests') {
