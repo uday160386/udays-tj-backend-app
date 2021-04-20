@@ -45,8 +45,10 @@ pipeline{
                 sh 'echo "deploying to k8"'
             }
     }
-     stage('tests-report') {
-            steps {
+
+    try {
+   stage('tests-report') {
+   steps {
 
                 sh '''#!/bin/bash
                 export PATH=/even/more/path:$PATH
@@ -64,8 +66,19 @@ pipeline{
                         reportName: 'HTML Report'
                          ]
                 }
+             node {
+               def e2e = build job:'tests-report', propagate: false
+               result = e2e.result
+               if (result.equals("SUCCESS")) {
+               } else {
+                  sh "exit 1" // this fails the stage
+               }
+             }
+           }
+        } catch (e) {
+           result = "FAIL" // make sure other exceptions are recorded as failure too
+        }
 
-            }
      stage('performance-Tests') {
             /* Stage where automated performance tests will be executed.Tools will be locust or jmeter */
             steps {
