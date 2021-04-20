@@ -13,6 +13,7 @@ pipeline{
     stage('Build-and-Tag') {
         steps {
             script {
+            sh '''#!/bin/bash
         app = docker.build "venmaum/udaystj-be-services:new"
         }
     }
