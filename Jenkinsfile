@@ -75,7 +75,7 @@ pipeline{
                   sh "exit 1" // this fails the stage
                }
              }
-
+        }
         } catch (e) {
            result = "FAIL" // make sure other exceptions are recorded as failure too
 
