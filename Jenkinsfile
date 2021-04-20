@@ -41,6 +41,9 @@ pipeline{
     }
     stage('Running Image in Kubernetes') {
     /* Stage where Docker image will be running with AWS EKS */
+    steps {
+                sh 'echo "deploying to k8"'
+            }
     }
      stage('tests-report') {
             steps {
