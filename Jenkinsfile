@@ -13,7 +13,7 @@ pipeline{
     stage('Build-and-Tag') {
         steps {
             script {
-        app = docker.build "venmaum/udaystj-be-services:new"
+        app = docker.build "venmaum/udaystj-be-services:latest"
         }
     }
     }
@@ -35,5 +35,16 @@ pipeline{
                 '''
             }
         }
+     stage('publish-html-report'){
+     steps{
+     publishHTML target: [
+            allowMissing: false,
+            alwaysLinkToLastBuild: false,
+            keepAll: true,
+            reportDir: 'results',
+            reportFiles: 'report.html',
+            reportName: 'HTML Report'
+          ]}
+     }
     }
 }
