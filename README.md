@@ -61,10 +61,10 @@ Note:The above paths are for reference and can be saved at your preferred path
 ```
 
 ## Sample Report
-    ![picture](design/postman_run_html_report.png)
+![picture](design/htmlReport.png)
 
 ## CI View
-    ![picture](design/CI_Stage_view.png)
+![picture](design/CI_Stage_view.png)
 ## work is still in progress .....
 
 [//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
