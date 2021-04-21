@@ -61,7 +61,7 @@ Note:The above paths are for reference and can be saved at your preferred path
 ```
 
 ## Sample Report
-![picture](design/htmlReport.png)
+![picture](design/postman_run_html_report.png)
 
 ## CI View
 ![picture](design/CI_Stage_view.png)
