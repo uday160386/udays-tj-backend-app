@@ -2,7 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e44a6950-4363-4118-b216-c9dc24acdb2d" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/design/CI_Stage_view.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/design/postman_run_html_report.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/main_udays-tj-backend-app.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Jenkinsfile" beforeDir="false" afterPath="$PROJECT_DIR$/Jenkinsfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gitIgnore" beforeDir="false" afterPath="$PROJECT_DIR$/gitIgnore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,6 +43,7 @@
       <recent name="$PROJECT_DIR$/auth" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/design" />
       <recent name="$PROJECT_DIR$/tests/env" />
       <recent name="$PROJECT_DIR$/tests/data" />
       <recent name="$PROJECT_DIR$" />

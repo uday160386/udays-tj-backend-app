@@ -45,8 +45,6 @@ pipeline{
                 sh 'echo "deploying to k8"'
             }
     }
-
-
    stage('tests-report') {
    steps {
 
